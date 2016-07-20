@@ -1,0 +1,6 @@
+
+import cv2
+import numpy
+
+mask = numpy.zeros((2, 2, 1), numpy.uint8)
+print mask

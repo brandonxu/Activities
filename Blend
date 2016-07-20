@@ -1,0 +1,42 @@
+
+# This script shows how to crop a part of an image
+import cv2
+import numpy
+# # Crop first 100 rows and first 200 columns
+# image = cv2.imread("TestImages/shops.jpg")
+# subImg = image[0:100, 0:200]
+# cv2.imshow("Subimage", subImg)
+# Crop two pictures to just the pixel locs they share
+im1 = cv2.imread("TestImages/waterfall.jpg")
+im2 = cv2.imread("TestImages/SnowLeo2.jpg")
+# (hgt1, wid1, dep1) = im1.shape
+# (hgt2, wid2, dep2) = im2.shape
+# newWid = min(wid1, wid2)
+# newHgt = min(hgt1, hgt2)
+# im1Crop = im1[0:newHgt, 0:newWid]
+# im2Crop = im2[0:newHgt, 0:newWid]
+# cv2.imshow("Im1 Cropped", im1Crop)
+# cv2.imshow("Im2 Cropped", im2Crop)
+# blendedImg = cv2.addWeighted(im1Crop, 0.3,
+#                 im2Crop, 0.6, 0)
+# cv2.imshow("blended", blendedImg)
+
+vidCap = cv2.VideoCapture(0)
+rect, image = vidCap.read()
+prevPics = [image] * 5
+
+while True:
+    rect, image = vidCap.read()
+    (hgt1, wid1, dep1) = im1.shape
+    (hgt2, wid2, dep2) = image.shape
+    newWid = min(wid1, wid2)
+    newHgt = min(hgt1, hgt2)
+    im1Crop = im1[0:newHgt, 0:newWid]
+    im2Crop = prevPics[0][0:newHgt, 0:newWid]
+    blendedImg = cv2.addWeighted(im1Crop, 0.3,
+                    im2Crop, 0.6, 0)
+    cv2.imshow("blended", blendedImg)
+    prevPics.append(image)
+    prevPics.pop(0)
+
+cv2.waitKey(0)

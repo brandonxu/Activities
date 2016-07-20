@@ -1,0 +1,12 @@
+import cv2
+import numpy
+vidCap = cv2.VideoCapture(0)
+while True:
+    ret, img = vidCap.read()
+    gImg = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY) #todo
+    blendedImg = cv2.GaussianBlur(img, (9, 9), 0)
+    height, width, depth = img.shape
+    mask = numpy.zeros((height, width, 1), numpy.uint8)
+    mask[50: 600, 50: 600, :] = 255
+    maskedImg = cv2.bitwise_and(gImg, mask)
+    cv2.imshow("mask", maskedImg)

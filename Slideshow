@@ -1,0 +1,10 @@
+import cv2
+import os
+
+imagesNames = os.listdir("TestImages")
+
+for image in imagesNames:
+    img1 = cv2.imread("TestImages/" + image)
+    cv2.imshow("Image", img1)
+    cv2.waitKey(0)
+cv2.destroyAllWindows()

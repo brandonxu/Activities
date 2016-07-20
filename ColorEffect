@@ -1,0 +1,9 @@
+import cv2
+import numpy
+
+vidCap = cv2.VideoCapture(0)
+while True:
+    rect, image = vidCap.read()
+    g, b, r = cv2.split(image)
+    img2 = cv2.merge((b,r,g))
+    cv2.imshow("Image", img2)
