@@ -1,0 +1,20 @@
+import cv2
+
+vidCap = cv2.VideoCapture(0)
+while True:
+    ret, img = vidCap.read()
+    gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+
+    sobelValsHorz = cv2.Sobel(gray, cv2.CV_32F, 1, 0)
+    horzImg = cv2.convertScaleAbs(sobelValsHorz)
+    cv2.imshow("horizontal gradient", horzImg)
+
+    sobelValsVerts = cv2.Sobel(gray, cv2.CV_32F, 0, 1)
+    vertImg = cv2.convertScaleAbs(sobelValsVerts)
+    cv2.imshow("vertical gradient", vertImg)
+
+    sobelComb = cv2.addWeighted(sobelValsHorz, 0.5, sobelValsVerts, 0.5, 0)
+    sobelImg = cv2.convertScaleAbs(sobelComb)
+
+    lines = cv2.HoughLinesP()
+    cv2.imshow("Sobel", sobelImg)

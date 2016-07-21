@@ -1,19 +1,23 @@
-
 import numpy as np
 import cv2
 
 origIm = cv2.imread('TestImages/Coins1.jpg')
-imgray = cv2.cvtColor(origIm,cv2.COLOR_BGR2GRAY)
+imgray = cv2.cvtColor(origIm, cv2.COLOR_BGR2GRAY)
 imHSV = cv2.cvtColor(origIm, cv2.COLOR_BGR2HSV)
 
-# lower_green =
-# upper_green =
+lower_green = np.array([50, 50, 50])
+upper_green = np.array([90, 255, 255])
 
-mask = cv2.inRange(imHSV, )
+mask1 = cv2.inRange(imHSV, lower_green, upper_green)
 
-ret,thresh = cv2.threshold(imgray,127,255,0)
-im2, contrs, hier = cv2.findContours(thresh,cv2.RETR_TREE,cv2.CHAIN_APPROX_SIMPLE)
-cv2.drawContours(origIm, contrs, -1, (0,255,0), 3)
+res = cv2.bitwise_and(origIm, origIm, mask1)
+
+im2, contrs, hier = cv2.findContours(mask1, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
+
+for i in xrange(4):
+    contrs.pop(i)
+
+cv2.drawContours(origIm, contrs, -1, (0, 255, 0), 3)
 cv2.imshow('Contours', origIm)
 cv2.waitKey(0)
-cv2.destroyAllWindows()
+cv2.threshdestroyAllWindows()
